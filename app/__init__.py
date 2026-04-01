@@ -1,20 +1,26 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from config import Config
+from flask_migrate import Migrate
 
-database = SQLAlchemy()
+db = SQLAlchemy()
+migrate = Migrate()
 
 
-def create_app(config_class=Config):
+def create_app(test_config=None):
     app = Flask(__name__)
-    app.config.from_object(config_class)
+    app.config['TESTING'] = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['WTF_CSRF_ENABLED'] = False
 
-    database.init_app(app)
+    db.init_app(app)
+    migrate.init_app(app, db)
 
-    with app.app_context():
-        database.create_all()
-
-    from app.routes import api_blueprint
-    app.register_blueprint(api_blueprint)
+    from app.models import Client, Parking, ClientParking
+    from app.routes import api_bp
+    app.register_blueprint(api_bp)
 
     return app
+
+
+__all__ = ['db', 'create_app']

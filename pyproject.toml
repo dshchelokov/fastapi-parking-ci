@@ -1,0 +1,7 @@
+[tool.mypy]
+ignore_missing_imports = true
+disallow_untyped_defs = false
+
+[[tool.mypy.overrides]]
+module = "flask_migrate.*"
+ignore_errors = true

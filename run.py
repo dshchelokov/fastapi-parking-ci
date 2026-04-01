@@ -1,14 +1,11 @@
-from app import create_app, database
+from app import create_app
 
 app = create_app()
 
-@app.cli.command()
-def init_db():
-    with app.app_context():
-        database.create_all()
-    print("Tables created!")
+
+def run() -> None:
+    app.run(debug=True)
+
 
 if __name__ == '__main__':
-    with app.app_context():
-        database.create_all()
-    app.run(debug=True)
+    run()
