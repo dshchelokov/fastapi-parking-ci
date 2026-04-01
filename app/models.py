@@ -19,7 +19,7 @@ class Parking(db.Model):  # type: ignore[name-defined]
 
 class ClientParking(db.Model):  # type: ignore[name-defined]
     id = db.Column(db.Integer, primary_key=True)
-    client_id = db.Column(db.Integer, db.ForeignKey('client.id'), nullable=False)
-    parking_id = db.Column(db.Integer, db.ForeignKey('parking.id'), nullable=False)
+    client_id = db.Column(db.Integer, db.ForeignKey("client.id"), nullable=False)
+    parking_id = db.Column(db.Integer, db.ForeignKey("parking.id"), nullable=False)
     time_in = db.Column(db.DateTime)
     time_out = db.Column(db.DateTime)
