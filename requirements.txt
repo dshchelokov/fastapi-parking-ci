@@ -3,5 +3,5 @@ Flask-SQLAlchemy==3.1.1
 Flask-Migrate==4.1.0
 pytest==8.3.2
 pytest-asyncio==0.22.0
-factory-boy==3.4.0
+factory-boy==3.3.3
 faker==30.0.0
