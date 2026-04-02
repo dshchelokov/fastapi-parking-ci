@@ -5,10 +5,10 @@ from flask import Blueprint, jsonify, request
 from app import db
 from app.models import Client, ClientParking, Parking
 
-api_blueprint = Blueprint("api", __name__)
+api_bp = Blueprint("api", __name__)
 
 
-@api_blueprint.route("/clients", methods=["GET"])
+@api_bp.route("/clients", methods=["GET"])
 def get_clients():
     clients = Client.query.all()
     return jsonify(
@@ -25,7 +25,7 @@ def get_clients():
     )
 
 
-@api_blueprint.route("/clients/<int:client_id>", methods=["GET"])
+@api_bp.route("/clients/<int:client_id>", methods=["GET"])
 def get_client(client_id):
     client = Client.query.get_or_404(client_id)
     return jsonify(
@@ -39,7 +39,7 @@ def get_client(client_id):
     )
 
 
-@api_blueprint.route("/clients", methods=["POST"])
+@api_bp.route("/clients", methods=["POST"])
 def create_client():
     data = request.get_json()
     client = Client(
@@ -56,7 +56,7 @@ def create_client():
     )
 
 
-@api_blueprint.route("/parkings", methods=["GET", "POST"])
+@api_bp.route("/parkings", methods=["GET", "POST"])
 def parkings():
     if request.method == "GET":
         parkings_list = Parking.query.all()
@@ -85,7 +85,7 @@ def parkings():
         return jsonify({"id": parking.id, "address": parking.address}), 201
 
 
-@api_blueprint.route("/client_parkings", methods=["POST"])
+@api_bp.route("/client_parkings", methods=["POST"])
 def entry_parking():
     data = request.get_json()
     client = Client.query.get_or_404(data["client_id"])
@@ -113,7 +113,7 @@ def entry_parking():
     return jsonify({"message": "Entry logged"}), 201
 
 
-@api_blueprint.route("/client_parkings", methods=["DELETE"])
+@api_bp.route("/client_parkings", methods=["DELETE"])
 def exit_parking():
     data = request.get_json()
     client = Client.query.get_or_404(data["client_id"])
